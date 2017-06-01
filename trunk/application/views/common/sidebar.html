@@ -1,0 +1,71 @@
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar nav-collapse collapse">
+    <!-- BEGIN SIDEBAR MENU -->
+    <ul class="page-sidebar-menu">
+        <li>
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+            <div class="sidebar-toggler hidden-phone"></div>
+            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+        </li>
+        <li>
+            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+            <form class="sidebar-search">
+                <div class="input-box">
+                    <a href="javascript:;" class="remove"></a>
+                    <input type="text" placeholder="Search..." />
+                    <input type="button" class="submit" value=" " />
+                </div>
+            </form>
+            <!-- END RESPONSIVE QUICK SEARCH FORM -->
+        </li>
+        <li {{if !$menu_id}}class="start active" {{/if}}>
+            <a href="/Admin_Layout/index/">
+                <i class="icon-home"></i>
+                <span class="title">后台首页</span>
+                <span class="selected"></span>
+            </a>
+        </li>
+        {{if !empty($my_menu)}}
+        {{foreach $my_menu as $key=>$value}}
+        <li class="dropdown" >
+        <a class="ajaxify" href="/{{$value['menu_controller']}}/{{$value['menu_method']}}">
+            <i class="{{$value['module_icon']}}"></i>
+            <span class="title">{{$value['menu_name']}}</span>
+            <span class="selected"></span>
+            {{if !empty($value['children'])}}
+            <span class="arrow"></span>
+            {{/if}}
+        </a>
+        <ul class="sub-menu">
+            {{if !empty($value['children'])}}
+            {{foreach $value['children'] as $key1=>$value1}}
+
+            <li class="{{$value1['menu_controller']}} page_name">
+            <!--<li class="start">-->
+                <a href="/{{$value1['menu_controller']}}/{{$value1['menu_method']}}">
+                    <i class="{{$value1['module_icon']}}"></i>
+                    {{$value1['menu_name']}}
+                    {{if !empty($value1['children'])}}
+                    <span class="arrow"></span>
+                    {{/if}}
+                </a>
+                {{if !empty($value1['children'])}}
+                {{foreach $value1 as $value2}}
+                <ul class="sub-menu">
+                    <li><a href="/{{$value2['menu_controller']}}/{{$value2['menu_method']}}">
+                        {{$value2['menu_name']}}
+                    </a></li>
+                </ul>
+                {{/foreach}}
+                {{/if}}
+            </li>
+            {{/foreach}}
+            {{/if}}
+        </ul>
+        </li>
+        {{/foreach}}
+        {{/if}}
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->

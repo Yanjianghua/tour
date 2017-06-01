@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>{{$web_name}}</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="/statics/media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="/statics/media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="/statics/media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="/statics/media/css/select2_metro.css" />
+	<link rel="stylesheet" href="/statics/media/css/DT_bootstrap.css" />
+	<!-- END PAGE LEVEL STYLES -->
+	{{include file='../../common/importAll.html'}}
+	<link rel="shortcut icon" href="/statics/media/image/favicon.ico" />
+</head>
+<!-- END HEAD -->
+<body class="page-header-fixed">
+	{{include file='../../common/header.html'}}
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		{{include file='../../common/sidebar.html'}}
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div id="portlet-config" class="modal hide">
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button"></button>
+					<h3>Widget Settings</h3>
+				</div>
+				<div class="modal-body">
+					Widget settings form goes here
+				</div>
+			</div>
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected>Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected>Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected>Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected>Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->
+						<h3 class="page-title">
+							操作记录
+							<small>Background management system</small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a>系统菜单</a>
+								<span class="icon-angle-right"></span>
+								<a href="">操作记录</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN DASHBOARD STATS -->
+						<div class="portlet box blue">
+							<div class="portlet-title">
+								<div class="caption"><i class="icon-list"></i>操作记录列表</div>
+							</div>
+							<div class="portlet-body">
+								<div class="clearfix">
+									<div class="btn-group">
+										<form action="/Admin_MySysLog/index" method="get">
+											<input type="text" name="user_name" placeholder="请输入用户名" minlength="3" maxlength="18" class="span6 m-wrap" {{if isset($user_name)}}value="{{$user_name}}"{{/if}}/>
+											<button type="submit" class="btn blue">查询</button>
+										</form>
+									</div>
+								</div>
+								<table class="table table-striped table-hover table-bordered" id="sample_editable_2">
+									<thead>
+									<tr>
+										<th>ID</th>
+										<th>用户名</th>
+										<th>控制器</th>
+										<th>方法</th>
+										<th>结果</th>
+										<th>内容</th>
+										<th>时间</th>
+									</tr>
+									</thead>
+									<tbody>
+									{{foreach $log['rows'] as $k=>$v}}
+									<tr class="">
+										<td>{{$v['op_id']}}</td>
+										<td>{{$v['user_name']}}</td>
+										<td>{{$v['class_name']}}</td>
+										<td>{{$v['class_obj']}}</td>
+										<td>{{cut_str($v['result'],30)}}</td>
+										<td>{{$v['action']}}</td>
+										<td>{{date('Y-m-d H:i:s',$v['op_time'])}}</td>
+									</tr>
+									{{/foreach}}
+									</tbody>
+								</table>
+								<div class="row-fluid">
+									<div class="span6">
+										第{{$log['page']+1}}页，共{{$log['page_all']}}页，每页20条
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											<ul>
+												<li class="prev {{if $log['page']==0}}disabled{{/if}}">
+													<a href="/Admin_MySysLog/index?page={{max($log['page']-1,0)}}"> ← <span class="hidden-480">Prev</span></a>
+												</li>
+												{{for $o=1 to $log['page_all']}}
+												<li class="page {{if $log['page']+1==$o}}active{{/if}}"><a href="/Admin_MySysLog/index?page={{$o-1}}">{{$o}}</a></li>
+												{{/for}}
+												<li class="next {{if ($log['page']+1)==$log['page_all']}}disabled{{/if}}">
+													<a href="/Admin_MySysLog/index?page={{min($log['page']+1,$log['page_all']-1)}}"><span class="hidden-480">Next</span> → </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- END DASHBOARD STATS -->
+					</div>
+				</div>
+				<!-- END PAGE CONTENT-->
+			</div>
+			<!-- END PAGE CONTAINER-->
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	{{include file='../../common/footer.html'}}
+	<!-- BEGIN CORE PLUGINS -->
+	{{include file='../../common/importBottomAll.html'}}
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" src="/statics/media/js/select2.min.js"></script>
+	<script type="text/javascript" src="/statics/media/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="/statics/media/js/DT_bootstrap.js"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script src="/statics/media/js/app.js"></script>
+	<script src="/statics/media/js/table-editable.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			App.init();
+			TableEditable.init();
+			Setsidebarfun.init();
+		});
+		$('.page').css('display','none');
+		$('.active').next().css('display','inline');
+		$('.active').next().next().css('display','inline');
+		$('.active').css('display','inline');
+		$('.active').prev().css('display','inline');
+		$('.active').prev().prev().css('display','inline');
+	</script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>家园旅游-本地游玩</title>
+    <link rel="stylesheet" href="/statics/pc/css/index_all.css" />
+    <script src="/statics/pc/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/statics/pc/laydate/laydate.js" ></script>
+    <script type="text/javascript" src="/statics/pc/js/from1.js" ></script>
+</head>
+<body >
+{{include file='../common/header.html'}}
+<!--主体-->
+<div id="main">
+    <!--筛选-->
+    <div class="jy-m-0 jy-w-1">
+        <div class="jy-m- jy-bg-3 jy-p-tb-1 jy-border-5">
+            <div id="brand">
+                <span>出发地</span>
+                <ul>
+                    <li class="select3"><a href="#">不限</a> </li>
+                    {{if !empty($system)}}
+                    {{foreach $system as $key=>$value}}
+                    {{if $value['system_class']==1}}
+                    <li ast="{{$value['system_id']}}" ><a href="local_start={{$value['system_id']}}">{{$value['system_name']}}</a></li>
+                    {{/if}}
+                    {{/foreach}}
+                    {{/if}}
+                </ul>
+
+            </div>
+
+            <div id="brand1" class="jy-border-bd-1">
+                <span>目的地</span>
+                <ul>
+                    <li class="select3"><a href="#">不限</a> </li>
+                    {{if !empty($system)}}
+                    {{foreach $system as $key=>$value}}
+                    {{if $value['system_class']==2}}
+                    <li ast="{{$value['system_id']}}" ><a href="local_end={{$value['system_id']}}">{{$value['system_name']}}</a></li>
+                    {{/if}}
+                    {{/foreach}}
+                    {{/if}}
+                </ul>
+            </div>
+
+            <div id="brand2" class="jy-border-bd-1">
+                <span>出游天数</span>
+                <ul>
+                    <li class="select3"><a href="#">不限</a> </li>
+                    {{if !empty($system)}}
+                    {{foreach $system as $key=>$value}}
+                    {{if $value['system_class']==3}}
+                    <li ast="{{$value['system_id']}}" ><a href="local_day={{$value['system_id']}}">{{$value['system_name']}}</a></li>
+                    {{/if}}
+                    {{/foreach}}
+                    {{/if}}
+                </ul>
+            </div>
+            <div id="brand3" class="jy-border-bd-1">
+                <span>出发时间</span>
+                <ul>
+                    <li class="select3"><a href="#">不限</a> </li>
+                    {{if !empty($system)}}
+                    {{foreach $system as $key=>$value}}
+                    {{if $value['system_class']==4}}
+                    <li ast="{{$value['system_id']}}" ><a href="local_start_time={{$value['system_id']}}">{{$value['system_name']}}</a></li>
+                    {{/if}}
+                    {{/foreach}}
+                    {{/if}}
+                </ul>
+            </div>
+            <div id="brand4" class="jy-border-bd-1">
+                <span>主题路线</span>
+                <ul>
+                    <li class="select3"><a href="#">不限</a> </li>
+                    {{if !empty($system)}}
+                    {{foreach $system as $key=>$value}}
+                    {{if $value['system_class']==5}}
+                    <li ast="{{$value['system_id']}}" ><a href="local_sub_line={{$value['system_id']}}">{{$value['system_name']}}</a></li>
+                    {{/if}}
+                    {{/foreach}}
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="jy-w-1 jy-m-0 clears">
+        <div class="jy-f-right tx-w-2 ">
+            <!--本地游玩-->
+            <div class="tg-div jy-p-2 jy-bg-3 jy-m-2 ">
+                <h3 class="jy-h3-0  jy-ds-inl">猜您喜欢</h3>
+                <div class="a-divbox-2">
+                    {{if !empty($local_recommend)}}
+                    {{foreach $local_recommend['rows'] as $key=>$value}}
+                    <a href="/local/details?id={{$value['local_id']}}">
+                        <img src="{{$value['local_pic1']}}" style="width: 255px;height: 150px;" />
+                        <dl>
+                            <dt>{{cut_str($value['local_name'],30)}}</dt>
+                        </dl>
+                    </a>
+                    {{/foreach}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="tx-w-1 jy-f-left">
+            <div class="jy-ul-1" id="listdivbox">
+                <ul>
+                    {{if !empty($local)}}
+                    {{foreach $local['rows'] as $key=>$value}}
+                    <li>
+                        <a href="/local/details?id={{$value['local_id']}}" target="_blank"><img src="{{$value['local_pic1']}}" style="width: 210px;height: 140px;" /></a>
+                        <span>
+										<h3><a href="/local/details?id={{$value['local_id']}}" target="_blank">{{$value['local_name']}}</a></h3>
+                                        <input type="hidden" name="id" value="{{$value['local_id']}}">
+										<dl>
+											<dt class="tx-ico-1">酒店：{{$value['local_address']}} </dt>
+											<dt class="tx-ico-2">景点：{{$value['local_spot']}} </dt>
+										</dl>
+									</span>
+                        <label>
+                            <dl>
+                                <dt><em>￥</em>{{$value['local_market_price']}}<i>起</i></dt>
+                                <dd>原价:￥{{$value['local_cost_price']}}/人</dd>
+                            </dl>
+                            <button type="button" value="" >立即预定</button>
+                        </label>
+                    </li>
+                    {{/foreach}}
+                    {{/if}}
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="pagination pagination-left">
+            <ul>
+                <li>
+					{{if $local['page']==0 or empty($local['page'])}}<span class="prev"> ← Prev</span>{{else}}<a class="prev" href="/local/index?page={{max($local['page']-1,0)}}"> ← Prev</a>{{/if}}
+				</li>
+				{{for $o=1 to $local['page_all']}}
+				<li>
+					{{if $local['page']+1==$o}}<span>{{$o}}</span>{{else}}<a href="/local/index?page={{$o-1}}">{{$o}}</a>{{/if}}
+				</li>
+                {{/for}}
+				<li>
+					{{if ($local['page']+1)==$local['page_all'] or $local['page_all']==0}}<span>Next → </span>{{else}}<a href="/local/index?page={{min($local['page']+1,$local['page_all']-1)}}">Next → </a>{{/if}}
+				</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="fromshow2" style="display: none;">
+    <div class="formbg"></div>
+    <div class="formdiv2">
+        <form method="post" action="/local/order_add" name="" enctype="multipart/form-data" id="form_01">
+            <div id="myform3">
+                <h3></h3>
+                <input type="hidden" name="order_class_tour" value="本地游玩" >
+                <input type="hidden" name="order_name" id="order_name" value="" >
+                <input type="hidden" name="order_correlation" id="order_correlation" value="" >
+                <label> <input type="text" name="order_username" value="" id="user1" placeholder="姓名" class="input1 jy-ico-1" /><dd>请输入用户名</dd> </label>
+                <label> <input type="text" name="order_tel" value="" id="user2" placeholder="手机号" class="input1 jy-ico-2" /><dd>请输入手机号</dd> </label>
+            </div>
+            <div  class="date-labe">
+                <input class="laydate-icon" name="order_start_time" placeholder="出行时间" onClick="laydate()">
+                <i></i>
+            </div>
+            <div class="date-labe numpeople-div" id="numpeople1">
+                <label>成人<i onclick="numjj(0)" class="on1">-</i><input name="order_adult" type="text"  value="1" /><i onclick="numadd(0)" >+</i></label>
+                <label>儿童<i onclick="numjj1(1)" class="on1">-</i><input name="order_children" type="text" value="0"  value="0" /><i onclick="numadd1(1)">+</i></label>
+            </div>
+            <button type="submit" value="" class="but1">立即提交</button>
+            <span id="closefrom2"></span>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    var Listbox=document.getElementById("listdivbox");
+    var Listbtn=Listbox.getElementsByTagName("button");
+    var ListH3=Listbox.getElementsByTagName("h3");
+    var ListID=Listbox.getElementsByTagName("input");
+
+    var FromShow2=document.getElementById("fromshow2");
+    var Fromdiv2=FromShow2.getElementsByTagName("div")[0]
+    var FromH3=FromShow2.getElementsByTagName("h3")[0];
+    var FromClose=document.getElementById("closefrom2");
+
+    for (var i=0;i<Listbtn.length;i++) {
+        Listbtn[i].index=i;
+        Listbtn[i].onclick=function(){
+            FromShow2.style.display="block";
+            FromH3.innerHTML=ListH3[this.index].innerText;
+            $("#order_name").val(ListH3[this.index].innerText);
+            $("#order_correlation").val(ListID[this.index].value);
+        }
+    }
+
+    FromClose.onclick=function(){
+        FromShow2.style.display="none";
+        FromH3.innerHTML="";
+        $("#order_name").val('');
+        $("#order_correlation").val('');
+    }
+
+    Fromdiv2.onclick=function(){
+        FromShow2.style.display="none";
+        FromH3.innerHTML="";
+        $("#order_name").val('');
+        $("#order_correlation").val('');
+    }
+
+    var pNum=document.getElementById("numpeople1");
+    var pInp=pNum.getElementsByTagName("input");
+    var pI=pNum.getElementsByTagName("i");
+    var n=1,n1=0;
+    function numadd(num){
+        pInp[num].value=++n;
+        pI[num].className="";
+    }
+    function numadd1(num){
+        pInp[num].value=++n1;
+        pI[num].className="";
+    }
+    function numjj(num){
+        if(pInp[num].value<=1){
+            return false;
+        }else{
+            pInp[num].value=--n;
+        }
+    }
+    function numjj1(num){
+        if(pInp[num].value==0){
+            return false;
+        }else{
+            pInp[num].value=--n1;
+        }
+    }
+
+    var ast = {
+        getlocal_start : null,//url中local_start值
+        getlocal_end : null,//url中local_end值
+        getlocal_day : null,//url中local_day值
+        getlocal_start_time : null,//url中local_start_time值
+        getplocal_sub_line : null,//url中local_sub_line值
+        domlocal_start : null,
+        domlocal_end : null,
+        domlocal_day : null,
+        domlocal_start_time : null,
+        domlocal_sub_line : null,
+        init : function(){
+            ast.urlResolve();//获取url中五个参数
+
+            ast.domlocal_start = $('#brand li');
+            ast.operateSelect(ast.domlocal_start,ast.getlocal_start);
+            ast.operateHref(ast.domlocal_start,'local_start');
+
+            ast.domlocal_end = $('#brand1 li');
+            ast.operateSelect(ast.domlocal_end,ast.getlocal_end);
+            ast.operateHref(ast.domlocal_end,'local_end');
+
+            ast.domlocal_day = $('#brand2 li');
+            ast.operateSelect(ast.domlocal_day,ast.getlocal_day);
+            ast.operateHref(ast.domlocal_day,'local_day');
+
+            ast.domlocal_start_time = $('#brand3 li');
+            ast.operateSelect(ast.domlocal_start_time,ast.getlocal_start_time);
+            ast.operateHref(ast.domlocal_start_time,'local_start_time');
+
+            ast.domlocal_sub_line = $('#brand4 li');
+            ast.operateSelect(ast.domlocal_sub_line,ast.getplocal_sub_line);
+            ast.operateHref(ast.domlocal_sub_line,'local_sub_line');
+        },
+        urlResolve : function(){
+            /*
+             以?分隔符，如果返回数组长度等于2，get[1]的数据类似brand=2&grade=13&price=0-5
+             再以&分隔符分隔参数，再分别用brand=、grade=、price=得到各自的url参数
+             */
+            get = document.location.href.split('?');
+            if (get.length==2){
+                gets = get[1].split('&');
+                for (i=0;i<gets.length;i++){
+                    tem = gets[i].split('local_start=');
+                    if (tem.length==2){ast.getlocal_start = tem[1];	continue;}
+                    tem = gets[i].split('local_end=');
+                    if (tem.length==2){ast.getlocal_end = tem[1];	continue;}
+                    tem = gets[i].split('local_day=');
+                    if (tem.length==2){ast.getlocal_day = tem[1];	continue;}
+                    tem = gets[i].split('local_start_time=');
+                    if (tem.length==2){ast.getlocal_start_time = tem[1];	continue;}
+                    tem = gets[i].split('local_sub_line=');
+                    if (tem.length==2){ast.getplocal_sub_line = tem[1];	continue;}
+                }
+            }
+        },
+        operateSelect : function(dom,urlattr){
+            /*
+             如果特定url参数不为空，比如brand=2，则首先清除不限的选中样式
+             再循环查找到li属性ast=urlattr，标记选中，结束循环
+             */
+            if (urlattr!=null){
+                dom.first().removeClass('select3');
+                ast._urlattr = urlattr;
+                dom.each(function(){
+                    if ($(this).attr('ast')==ast._urlattr){
+                        $(this).addClass('select3');	return;
+                    }
+                });
+            }
+        },
+        operateHref : function(dom,type){
+            /*
+             将三url参数保存到副本中，type枚举:'brand'、'grade'、'price'
+             当type='brand'表示操作<div id="brand">，此时ast._getbrand不取url中brand值，而取<li ast="2">中ast参数
+             type='grade'、type='price' 类推
+
+             _getbrand如果为空返回‘?’，不为空返回'?brand='
+             href 不等于'?'且_getgrade不为空，则需要&拼接
+             最终得到相应href字符串
+             */
+            ast._type = type;
+            dom.each(function() {
+                ast._getlocal_start = ast.getlocal_start;
+                ast._getlocal_end = ast.getlocal_end;
+                ast._getlocal_day = ast.getlocal_day;
+                ast._getlocal_start_time = ast.getlocal_start_time;
+                ast._getplocal_sub_line = ast.getplocal_sub_line;
+
+                switch (ast._type){
+                    case 'local_start':
+                        ast._getlocal_start = $(this).attr('ast');	break;
+                    case 'local_end':
+                        ast._getlocal_end = $(this).attr('ast');	break;
+                    case 'local_day':
+                        ast._getlocal_day = $(this).attr('ast');	break;
+                    case 'local_start_time':
+                        ast._getlocal_start_time = $(this).attr('ast');	break;
+                    case 'local_sub_line':
+                        ast._getplocal_sub_line = $(this).attr('ast');	break;
+                }
+                href = ast._getlocal_start==null ? '?' : '?local_start=' + ast._getlocal_start;
+                href += ((href!='?' && ast._getlocal_end!=null) ? '&' : '') + (ast._getlocal_end==null ? '' : 'local_end=' + ast._getlocal_end);
+                href += ((href!='?' && ast._getlocal_day!=null) ? '&' : '') + (ast._getlocal_day==null ? '' : 'local_day=' + ast._getlocal_day);
+                href += ((href!='?' && ast._getlocal_start_time!=null) ? '&' : '') + (ast._getlocal_start_time==null ? '' : 'local_start_time=' + ast._getlocal_start_time);
+                href += ((href!='?' && ast._getplocal_sub_line!=null) ? '&' : '') + (ast._getplocal_sub_line==null ? '' : 'local_sub_line=' + ast._getplocal_sub_line);
+                $(this).children('a').attr('href',href);
+            });
+        }
+    }
+    $(function(){
+        ast.init();
+    });
+    $('.local').addClass('select1');
+</script>
+<!--底部-->
+{{include file='../common/footer.html'}}
+</body>
+</html>

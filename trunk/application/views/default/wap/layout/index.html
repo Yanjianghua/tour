@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>韶关旅游</title>
+    <link rel="stylesheet" href="/statics/wap/css/comm.css" />
+    <link rel="stylesheet" href="/statics/wap/css/index.css" />
+    <link rel="stylesheet" href="/statics/wap/css/swiper.min.css" />
+    <script type="text/javascript" src="/statics/wap/js/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<!--头部-->
+<div id="header-box" class="wap-pst-r">
+    <!-- 焦点图 -->
+    <div class="swiper-container wap-max-h-1">
+        <ul class="swiper-wrapper">
+            {{if !empty($ad_4)}}
+            {{foreach $ad_4 as $key=>$value}}
+            <li class="swiper-slide"><a href="{{$value['ad_url']}}"><img src="{{$value['ad_pic']}}" width="400" height="220"/></a></li>
+            {{/foreach}}
+            {{/if}}
+        </ul>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<!--导航-->
+<nav id="nav-box" class="wap-bg-2">
+    <div class="wap-pad-3 wap-aft-clears">
+        <a href="/m/theme"></a>
+        <a href="/m/around"></a>
+        <a href="/m/ticket"></a>
+        <a href="/m/outbound"></a>
+        <a href="/m/local"></a>
+        <a href="/m/inbound"></a>
+    </div>
+
+</nav>
+
+<!--景点门票，周边游等-->
+<section id="content-box" class=" wap-marg-t-1">
+    <div class="tab-nav wap-pad-1" id="tab-nav">
+        <ul>
+            <li class="select-1">景点门票</li>
+            <li>周边游</li>
+            <li>国内游</li>
+            <li>本地游玩</li>
+        </ul>
+
+    </div>
+    <div id="con-list">
+        <!--景点门票-->
+        <div class="text-list">
+            <ul class="wap-ul-1">
+                {{if !empty($ticket)}}
+                {{foreach $ticket as $key=>$value}}
+                <li>
+                    <a href="/m/ticket/details/{{$value['ticket_id']}}.html">
+                        <img src="{{$value['ticket_wap_pic1']}}" />
+                        <dl class="text-dl-1 wap-pst-r">
+                            <dd>{{cut_str($value['ticket_name'],15)}}</dd>
+                            <dt>{{cut_str($value['ticket_spot'],30)}}</dt>
+                        </dl>
+                    </a>
+                    <span>￥{{$value['ticket_market_price']}}<em>起</em></span>
+                </li>
+                {{/foreach}}
+                {{/if}}
+            </ul>
+            <a href="/m/ticket/" class="more">查看更多</a>
+        </div>
+
+        <!--周边旅游-->
+        <div class="text-list wap-hid">
+            <ul class="wap-ul-1">
+                {{if !empty($around)}}
+                {{foreach $around as $key=>$value}}
+                <li>
+                    <a href="/m/around/details/{{$value['around_id']}}.html">
+                        <img src="{{$value['around_wap_pic1']}}" />
+                        <dl class="text-dl-1 wap-pst-r">
+                            <dd>{{cut_str($value['around_name'],30)}}</dd>
+                            <dt>{{cut_str($value['around_spot'],30)}}</dt>
+                        </dl>
+                    </a>
+                    <span>￥{{$value['around_market_price']}}<em>起</em></span>
+                </li>
+                {{/foreach}}
+                {{/if}}
+            </ul>
+            <a href="/m/around/" class="more">查看更多</a>
+        </div>
+        <!--国内游-->
+        <div class="text-list wap-hid">
+            <ul class="wap-ul-1">
+                {{if !empty($inbound)}}
+                {{foreach $inbound as $key=>$value}}
+                <li>
+                    <a href="/m/inbound/details/{{$value['inbound_id']}}.html">
+                        <img src="{{$value['inbound_wap_pic1']}}" />
+                        <dl class="text-dl-1 wap-pst-r">
+                            <dd>{{cut_str($value['inbound_name'],30)}}</dd>
+                            <dt>{{cut_str($value['inbound_spot'],30)}}</dt>
+                        </dl>
+                    </a>
+                    <span>￥{{$value['inbound_market_price']}}<em>起</em></span>
+                </li>
+                {{/foreach}}
+                {{/if}}
+            </ul>
+            <a href="/m/inbound" class="more">查看更多</a>
+        </div>
+
+        <!--本地游玩-->
+        <div class="text-list wap-hid">
+            <ul class="wap-ul-1">
+                {{if !empty($local)}}
+                {{foreach $local as $key=>$value}}
+                <li>
+                    <a href="/m/local/details/{{$value['local_id']}}.html">
+                        <img src="{{$value['local_wap_pic1']}}" />
+                        <dl class="text-dl-1 wap-pst-r">
+                            <dd>{{cut_str($value['local_name'],30)}}</dd>
+                            <dt>{{cut_str($value['local_spot'],30)}}</dt>
+                        </dl>
+                    </a>
+                    <span>￥{{$value['local_market_price']}}<em>起</em></span>
+                </li>
+                {{/foreach}}
+                {{/if}}
+            </ul>
+            <a href="/m/local" class="more">查看更多</a>
+        </div>
+    </div>
+
+</section>
+<script>
+    $("#tab-nav").find("ul").children().each(function() {
+        var _index = $(this).index();
+        $(this).mouseenter(function() {
+            $(this).addClass("select-1").siblings().removeClass("select-1");
+            $("#con-list").find("div").eq(_index).fadeIn().siblings().stop().hide();
+        });
+    })
+</script>
+<!--底部-->
+{{include file='../common/footer.html'}}
+
+
+
+<script  src="/statics/wap/js/swiper.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        autoplay:5000,
+        spaceBetween: 30
+    });
+</script>
+
+
+
+</body>
+</html>
